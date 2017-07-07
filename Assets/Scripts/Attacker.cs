@@ -15,4 +15,15 @@ public class Attacker : MonoBehaviour
     {
         transform.Translate(Vector3.left * walkSpeed * Time.deltaTime);
     }
+
+    public void SetSpeed(float speed)
+    {
+        walkSpeed = speed;
+    }
+
+    public void StrikeCurrentTarget(float damage)
+    {
+        print(name + 
+            " striking target");
+    }
 }
