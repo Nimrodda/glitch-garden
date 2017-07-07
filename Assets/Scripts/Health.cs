@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour {
-    public int health;
+    public float health;
     // Use this for initialization
     void Start () {
         
@@ -14,7 +14,7 @@ public class Health : MonoBehaviour {
         
     }
 
-    public void TakeHit(int hit)
+    public void Damage(float hit)
     {
         health -= hit;
         if (health <= 0)
