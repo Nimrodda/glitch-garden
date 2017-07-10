@@ -21,7 +21,7 @@ public class Defender : MonoBehaviour
 
     void OnMouseDrag()
     {
-        pos.x = Input.mousePosition.x;
+        /*pos.x = Input.mousePosition.x;
         pos.y = Input.mousePosition.y;
         pos.z = Input.mousePosition.z;
         Vector3 worldpos = Camera.main.ScreenToWorldPoint(pos);
@@ -29,6 +29,6 @@ public class Defender : MonoBehaviour
         worldpos.y = Mathf.Clamp(Mathf.Round(worldpos.y), 1f, 5f);
         worldpos.z = 0;
         print(worldpos);
-        gameObject.transform.position = worldpos;
+        gameObject.transform.position = worldpos;*/
     }
 }
