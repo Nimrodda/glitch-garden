@@ -6,17 +6,10 @@ public class DefenderSpawner : MonoBehaviour
 {
     private Vector2 pos = new Vector2();
     private GameObject defendersParent;
-    private const int GRID_ROWS = 5;
-    private const int GRID_COL = 9;
-    private int[][] grid = new int[GRID_COL][];
-
+    private GameGrid gameGrid = new GameGrid(9, 5);
     // Use this for initialization
     void Start () 
     {
-        for (int i = 0; i < GRID_COL; i++)
-        {
-            grid[i] = new int[GRID_ROWS];
-        }
         defendersParent = new GameObject("Defenders");
         
     }
@@ -37,20 +30,20 @@ public class DefenderSpawner : MonoBehaviour
             worldpos.x = Mathf.Clamp(Mathf.Round(worldpos.x), 1f, 9f);
             worldpos.y = Mathf.Clamp(Mathf.Round(worldpos.y), 1f, 5f);
 
-            int x = (int)worldpos.x;
-            int y = (int)worldpos.y;
+            int x = (int)worldpos.x - 1;
+            int y = (int)worldpos.y - 1;
 
-            if (grid[x][y] == 0)
+            if (gameGrid.Update(x, y))
             {
                 print("Instantiating " + DefenderPicker.Selected.name + " in grid " + worldpos);
                 var defender = Instantiate(DefenderPicker.Selected, worldpos, Quaternion.identity);
                 defender.transform.parent = defendersParent.transform;
-                grid[(int)worldpos.x - 1][(int)worldpos.y - 1] = 1;
             }
             else
             {
                 print("Defender already exists at " + worldpos);
             }
+            print(gameGrid.toString());
         }
     }
 }
