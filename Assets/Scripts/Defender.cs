@@ -2,5 +2,5 @@
 
 public class Defender : MonoBehaviour
 {
-    public int cost;
+    public int Cost;
 }

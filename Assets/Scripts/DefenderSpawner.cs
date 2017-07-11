@@ -6,44 +6,52 @@ public class DefenderSpawner : MonoBehaviour
 {
     private Vector2 pos = new Vector2();
     private GameObject defendersParent;
-    private GameGrid gameGrid = new GameGrid(9, 5);
-    // Use this for initialization
-    void Start () 
+    private StarDisplay starDisplay;
+    private DefenderSpawnerController controller;
+
+    void Start() 
     {
+        controller = new DefenderSpawnerController(this);
         defendersParent = new GameObject("Defenders");
-        
+        starDisplay = GameObject.FindObjectOfType<StarDisplay>();
     }
     
-    // Update is called once per frame
-    void Update () 
-    {
-        
-    }
-
     void OnMouseDown()
     {
-        if (DefenderPicker.Selected)
+        if (!DefenderPicker.Selected)
         {
-            pos.x = Input.mousePosition.x;
-            pos.y = Input.mousePosition.y;
-            Vector2 worldpos = Camera.main.ScreenToWorldPoint(pos);
-            worldpos.x = Mathf.Clamp(Mathf.Round(worldpos.x), 1f, 9f);
-            worldpos.y = Mathf.Clamp(Mathf.Round(worldpos.y), 1f, 5f);
-
-            int x = (int)worldpos.x - 1;
-            int y = (int)worldpos.y - 1;
-
-            if (gameGrid.Update(x, y))
-            {
-                print("Instantiating " + DefenderPicker.Selected.name + " in grid " + worldpos);
-                var defender = Instantiate(DefenderPicker.Selected, worldpos, Quaternion.identity);
-                defender.transform.parent = defendersParent.transform;
-            }
-            else
-            {
-                print("Defender already exists at " + worldpos);
-            }
-            print(gameGrid.toString());
+            print("No defender selected");
+            return;
         }
+        Vector2 gridPos = getGridPosition();
+        controller.OnGridClicked(gridPos.x, gridPos.y);
+    }
+
+    private Vector2 getGridPosition()
+    {
+        pos.x = Input.mousePosition.x;
+        pos.y = Input.mousePosition.y;
+        Vector2 worldpos = Camera.main.ScreenToWorldPoint(pos);
+        worldpos.x = Mathf.Clamp(Mathf.Round(worldpos.x), 1f, 9f);
+        worldpos.y = Mathf.Clamp(Mathf.Round(worldpos.y), 1f, 5f);
+        return worldpos;
+    }
+
+    public bool HasSufficientFunds()
+    {
+        var selectedDefender = DefenderPicker.Selected.GetComponent<Defender>();
+        return selectedDefender.Cost <= starDisplay.Stars;
+    }
+
+    public void SpawnDefenderAtPosition(float x, float y)
+    {
+        var newDefender = Instantiate(DefenderPicker.Selected, new Vector2(x, y), Quaternion.identity);
+        newDefender.transform.parent = defendersParent.transform;
+    }
+
+    public void UpdateFunds()
+    {
+        var selectedDefender = DefenderPicker.Selected.GetComponent<Defender>();
+        starDisplay.RemoveStars(selectedDefender.Cost);
     }
 }

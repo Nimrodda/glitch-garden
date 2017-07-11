@@ -30,7 +30,7 @@ public class GameGrid
         return false;
     }
 
-    public string toString()
+    override public string ToString()
     {
         string output = string.Empty;
         for (int y = GRID_ROWS - 1; y >= 0 ; y--)

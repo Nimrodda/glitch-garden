@@ -29,6 +29,8 @@ public class Attacker : MonoBehaviour
         walkSpeed = speed;
     }
 
+    // This method is called by event from Lizard's attacking animation (motion clip)
+    // and hence the damage is applied from there
     public void StrikeCurrentTarget(float damage)
     {
         if (currentTarget)
