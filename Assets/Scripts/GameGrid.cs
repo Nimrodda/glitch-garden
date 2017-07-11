@@ -17,14 +17,14 @@ public class GameGrid
 
     public bool IsFree(int x, int y)
     {
-        return grid[x][y] == 0;
+        return grid[x - 1][y - 1] == 0;
     }
 
     public bool Update(int x, int y)
     {
         if (IsFree(x, y))
         {
-            grid[x][y] = 1;
+            grid[x - 1][y - 1] = 1;
             return true;
         }
         return false;

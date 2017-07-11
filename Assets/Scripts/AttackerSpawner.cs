@@ -7,9 +7,19 @@ public class AttackerSpawner : MonoBehaviour
     public float spawnDelaySeconds;
     public GameObject attackerPrefab;
 
+    private Timer timer;
+
     void Start () 
     {
-        InvokeRepeating("ShouldSpawnAttacker", spawnDelaySeconds, spawnDelaySeconds);
+        timer = GetComponent<Timer>();
+        if (timer)
+        {
+            timer.Finish += () => {
+                print("Finish()");
+                InvokeRepeating("ShouldSpawnAttacker", spawnDelaySeconds, spawnDelaySeconds);
+            };
+            timer.Run();
+        }
     }
     
     void ShouldSpawnAttacker()
