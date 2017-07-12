@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DefenderPicker : MonoBehaviour 
 {
     public GameObject[] defenderPrefab;
+    public GameObject costPrefab;
+
     public static GameObject Selected { get; set; }
     
     private Dictionary<GameObject, GameObject> buttonPrefabMapping = new Dictionary<GameObject, GameObject>();
@@ -45,6 +48,9 @@ public class DefenderPicker : MonoBehaviour
             spriteRenderer.sprite = prefab.transform.Find("Body").GetComponent<SpriteRenderer>().sprite;
             spriteRenderer.color = Color.black;
             var collider = button.AddComponent<BoxCollider2D>();
+            var cost = Instantiate(costPrefab, button.transform.position, Quaternion.identity);
+            cost.GetComponent<RectTransform>().SetParent(button.transform);
+            cost.transform.Find("Text").GetComponent<Text>().text = prefab.GetComponent<Defender>().Cost.ToString();
             collider.isTrigger = true;
             collider.size = colliderSize;
 
