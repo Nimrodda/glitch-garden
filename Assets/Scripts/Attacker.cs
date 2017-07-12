@@ -5,6 +5,7 @@ public class Attacker : MonoBehaviour
 {
     [Range(-1f, 1.5f)]
     public float walkSpeed;
+    public AudioClip strikeSound;
 
     private Animator animator;
     private GameObject currentTarget;
@@ -33,6 +34,7 @@ public class Attacker : MonoBehaviour
     // and hence the damage is applied from there
     public void StrikeCurrentTarget(float damage)
     {
+        AudioSource.PlayClipAtPoint(strikeSound, transform.position);
         if (currentTarget)
         {
             Health health = currentTarget.GetComponent<Health>();

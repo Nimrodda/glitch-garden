@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour 
 {
+    public AudioClip projectileSound;
     public GameObject projectile;
     private GameObject parent;
     private Vector3 gunPosition;
@@ -53,6 +54,7 @@ public class Shooter : MonoBehaviour
 
     private void fire()
     {
+        AudioSource.PlayClipAtPoint(projectileSound, transform.position);
         GameObject newProjectile = Instantiate(projectile, gunPosition, Quaternion.identity) as GameObject;
         newProjectile.transform.parent = parent.transform;
 

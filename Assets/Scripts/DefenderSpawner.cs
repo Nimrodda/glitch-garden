@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DefenderSpawner : MonoBehaviour 
 {
+    public AudioClip placingSound;
+    
     private Vector2 pos = new Vector2();
     private GameObject defendersParent;
     private StarDisplay starDisplay;
@@ -45,7 +47,9 @@ public class DefenderSpawner : MonoBehaviour
 
     public void SpawnDefenderAtPosition(float x, float y)
     {
-        var newDefender = Instantiate(DefenderPicker.Selected, new Vector2(x, y), Quaternion.identity);
+        var pos = new Vector2(x, y);
+        AudioSource.PlayClipAtPoint(placingSound, pos);
+        var newDefender = Instantiate(DefenderPicker.Selected, pos, Quaternion.identity);
         newDefender.transform.parent = defendersParent.transform;
     }
 
